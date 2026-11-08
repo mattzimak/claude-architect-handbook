@@ -90,6 +90,6 @@ The rules double as the study map: one section per task statement, with a "Read 
 
 ## About
 
-Built by [Matt Zimak](https://mattzimak.com), who runs an automation agency and passed Claude Certified Architect - Foundations with 851 on 30 September 2026 and sat the Professional exam on 9 November 2026. The rules are the ones he applies to client agents and automations.
+Built by [Matt Zimak](https://mattzimak.com), who runs an automation agency and passed Claude Certified Architect - Foundations with 851 on 30 September 2026 and sits the Professional exam on 9 November 2026. The rules are the ones he applies to client agents and automations.
 
 Not affiliated with or endorsed by Anthropic. Claude is a trademark of Anthropic, PBC. MIT licence.
