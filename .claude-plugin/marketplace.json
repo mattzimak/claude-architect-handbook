@@ -1,0 +1,19 @@
+{
+  "name": "mattzimak-architect",
+  "description": "Matt Zimak's architecture rules for building with Claude: the judgement layer behind agents, automations and model-backed features.",
+  "owner": {
+    "name": "Matt Zimak",
+    "url": "https://mattzimak.com"
+  },
+  "plugins": [
+    {
+      "name": "ai-architect-rules",
+      "source": "./",
+      "description": "38 architecture decision rules with the deciding cue, the right call and the tempting wrong call; a review gate for plans and workflows; a hook that fires them while you build. Start with /ai-architect-rules:ai-architect-rules.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Matt Zimak"
+      }
+    }
+  ]
+}
