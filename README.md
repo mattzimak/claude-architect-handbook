@@ -15,12 +15,23 @@ It is written for people who build with automations (n8n, Workers, pipelines) an
 
 ## Install
 
-In Claude Code:
+**Claude Code in a terminal:**
 
 ```
 /plugin marketplace add mattzimak/claude-architect-handbook
 /plugin install architect-handbook@mattzimak-architect
 ```
+
+**VS Code extension:** type `/plugins` on its own to open **Manage plugins**. On the **Marketplaces** tab, add `mattzimak/claude-architect-handbook`. On the **Plugins** tab, find `architect-handbook`, click **Install** and pick a scope. The two `/plugin` lines above do not work in the VS Code panel: typed with arguments there, they get the reply "/plugin isn't available in this environment".
+
+**From a shell**, without starting a session:
+
+```
+claude plugin marketplace add mattzimak/claude-architect-handbook
+claude plugin install architect-handbook@mattzimak-architect
+```
+
+If the short form fails, add the marketplace by its URL: `https://github.com/mattzimak/claude-architect-handbook.git`.
 
 Then:
 
@@ -28,8 +39,6 @@ Then:
 /architect-handbook:architect-rules should my refund flow be an agent or a workflow?
 /architect-handbook:architect-review workflows/lead-router.json
 ```
-
-From a terminal: `claude plugin marketplace add mattzimak/claude-architect-handbook`, then `claude plugin install architect-handbook@mattzimak-architect`. If the short form fails, add the marketplace by its URL: `https://github.com/mattzimak/claude-architect-handbook.git`.
 
 Optional, for the file trigger: copy [templates/agent-architecture.md](templates/agent-architecture.md) to `.claude/rules/agent-architecture.md` in your project (or `~/.claude/rules/` for every project). Plugins cannot install rules, so this one step is yours.
 
