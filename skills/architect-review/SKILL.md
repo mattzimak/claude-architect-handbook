@@ -1,7 +1,7 @@
 ---
 name: architect-review
-description: Review a plan, design doc, n8n workflow export, agent or MCP server configuration, system prompt, or diff against the 38 AI architecture rules (ai-architect-rules) and return ranked findings - must fix, should fix, consider - each citing a rule id, the evidence in the artefact, the fix, and the constraint under which the current design would be right. The control gate before an agent, automation or model-backed feature is built, deployed or promised to a client. Use when the user says "review the architecture", "architect review", "is this design right", "check this workflow", "review this agent setup", "before we ship the agent", or before any plan that adds a model call, a tool, a credential, a retrieval step, an approval step or an SLA is approved.
-argument-hint: "<path or paste> [d1-d7 | all], e.g. /ai-architect-rules:architect-review workflows/lead-router.json | /ai-architect-rules:architect-review docs/design.md d3 d5"
+description: Review a plan, design doc, n8n workflow export, agent or MCP server configuration, system prompt, or diff against the 38 AI architecture rules (the architect-rules skill in this plugin) and return ranked findings - must fix, should fix, consider - each citing a rule id, the evidence in the artefact, the fix, and the constraint under which the current design would be right. The control gate before an agent, automation or model-backed feature is built, deployed or promised to a client. Use when the user says "review the architecture", "architect review", "is this design right", "check this workflow", "review this agent setup", "before we ship the agent", or before any plan that adds a model call, a tool, a credential, a retrieval step, an approval step or an SLA is approved.
+argument-hint: "<path or paste> [d1-d7 | all], e.g. /architect-handbook:architect-review workflows/lead-router.json | /architect-handbook:architect-review docs/design.md d3 d5"
 allowed-tools: Read, Grep, Glob, Bash(${CLAUDE_PLUGIN_ROOT}/scripts/ref.sh *)
 ---
 
@@ -22,7 +22,7 @@ The gate. You read one artefact and judge it against the 38 architecture rules, 
 
 ## What you do not do
 
-- You do not rewrite the artefact, change files, or run anything. The builder applies the fixes (the `ai-architect-rules` skill helps design them).
+- You do not rewrite the artefact, change files, or run anything. The builder applies the fixes (the `architect-rules` skill helps design them).
 - You do not invent facts about the system; where the artefact is silent, the check is "cannot answer", not a finding.
 - You do not bring in facts from outside the artefact; you quote the artefact.
 - Plain hyphens only.

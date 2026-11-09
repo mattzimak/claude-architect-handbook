@@ -1,7 +1,7 @@
 ---
-name: ai-architect-rules
+name: architect-rules
 description: The architecture judgement layer for anything built on Claude or any LLM - agents, automations (n8n, Workers, pipelines), RAG, MCP servers, tool permissions, prompts, evals, human review, compliance, SLAs, model choice, Claude Code team setup. 38 decision rules keyed to the Claude Certified Architect - Professional blueprint and Anthropic's public guidance, each with the deciding cue, the right call and the tempting wrong call. Use BEFORE designing or changing an agent, a workflow that calls a model, a tool list, a credential, a retrieval pipeline, an eval, an approval step, a prompt, a data flow with personal data, or a promise to a client about accuracy or latency; and whenever the user says "architect this", "is this the right pattern", "should this be an agent", "which model", "do we need MCP", "where does the human sit", "how do we measure it", or asks a CCAR theory question outside a study session.
-argument-hint: "[topic or rule id | vocab <term>], e.g. /ai-architect-rules:ai-architect-rules D3.2 | /ai-architect-rules:ai-architect-rules where should the human sit"
+argument-hint: "[topic or rule id | vocab <term>], e.g. /architect-handbook:architect-rules D3.2 | /architect-handbook:architect-rules where should the human sit"
 allowed-tools: Bash(${CLAUDE_PLUGIN_ROOT}/scripts/ref.sh *)
 ---
 
@@ -18,7 +18,7 @@ You are the architecture reviewer that sits beside the builder. The rules below 
 3. **Give the call, then the tempting wrong call it replaces.** Builders reach for the wrong call because it is the easy one (add logging, add MFA, bigger model, more agents, fine-tune, batch it, enable caching). Name it so it is not taken.
 4. **Load the reference files only for the rules in play** (one to three domains, never all seven) by running `${CLAUDE_PLUGIN_ROOT}/scripts/ref.sh <name> [<name>...]` with the short names `d1` .. `d7`, `vocab`, `checklist`, `sources`. The script prints the file; it needs no file-read permission.
 5. **Mark exam key versus current reality** when they differ (section below). The rules are keyed to the blueprint's world; where product behaviour has moved on, say both.
-6. **Reviewing an artefact**: hand over to the `architect-review` skill in this plugin (`/ai-architect-rules:architect-review <path>`), which loads the checklist and produces ranked findings.
+6. **Reviewing an artefact**: hand over to the `architect-review` skill in this plugin (`/architect-handbook:architect-review <path>`), which loads the checklist and produces ranked findings.
 7. **Vocabulary** (`vocab <term>`, or an unfamiliar word in the conversation): `ref.sh vocab`, 85 terms with an "in your world" line each.
 
 ## The decision table

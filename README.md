@@ -1,15 +1,15 @@
-# AI Architect Rules
+# Claude Architect Handbook
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) ![Plugin 0.1.0](https://img.shields.io/badge/plugin-0.1.0-black) ![38 rules](https://img.shields.io/badge/rules-38-2ea043) ![7 domains](https://img.shields.io/badge/domains-7-lightgrey)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) ![Plugin 0.1.1](https://img.shields.io/badge/plugin-0.1.1-black) ![38 rules](https://img.shields.io/badge/rules-38-2ea043) ![Unofficial](https://img.shields.io/badge/unofficial-not%20affiliated%20with%20Anthropic-lightgrey)
 
-A Claude Code plugin that carries the architecture judgement behind the Claude Certified Architect - Professional blueprint into your daily building: 38 decisions about agents, tools, credentials, MCP, retrieval, evals, human review, guardrails, compliance data, model tiers, caching, SLAs and team setup. Each rule names the cue in a request that makes it the live question, the right call, and the tempting wrong call most builders reach for first.
+The judgement an architect applies when building with Claude, as a Claude Code plugin that fires while you build. 38 decisions about agents, tools, credentials, MCP, retrieval, evals, human review, guardrails, compliance data, model tiers, caching, SLAs and team setup, keyed to the public Claude Certified Architect blueprint (Professional level now; the Foundations set, on Claude Code mechanics, is next). Each rule names the cue in a request that makes it the live question, the right call, and the tempting wrong call most builders reach for first.
 
 It is written for people who build with automations (n8n, Workers, pipelines) and coding agents, with or without an engineering background. The 85-term vocabulary translates every engineering word into the thing it corresponds to in automation or client work.
 
 ## What it does
 
 - **Answers design questions by rule.** Ask "should this be an agent", "which model", "do we need MCP", "where does the human sit", "how do we measure it". Claude names the rule (for example D3.2), quotes the cue from your request, gives the call, and names the shortcut it replaces (add logging, add MFA, bigger model, more agents, fine-tune, batch it, enable caching, strengthen the prompt).
-- **Gates plans and workflows.** `/ai-architect-rules:architect-review <path>` reads a plan, an n8n export, an agent or MCP config, a system prompt or a diff and returns ranked findings (must fix, should fix, consider), each with the rule id, the evidence quoted from the artefact, the fix, and the constraint under which your current design would have been right.
+- **Gates plans and workflows.** `/architect-handbook:architect-review <path>` reads a plan, an n8n export, an agent or MCP config, a system prompt or a diff and returns ranked findings (must fix, should fix, consider), each with the rule id, the evidence quoted from the artefact, the fix, and the constraint under which your current design would have been right.
 - **Fires while you build.** A prompt hook recognises architecture decisions in what you type and reminds Claude to apply the rules, once in full per session and then in one line. A rule template does the same when Claude touches an agent, MCP, prompt, workflow or eval file.
 - **Explains the words.** `vocab p95`, `vocab confused deputy`, `vocab token passthrough`: plain meaning, the "in your world" line, and the rules it serves.
 
@@ -18,18 +18,18 @@ It is written for people who build with automations (n8n, Workers, pipelines) an
 In Claude Code:
 
 ```
-/plugin marketplace add mattzimak/ai-architect-rules
-/plugin install ai-architect-rules@mattzimak-architect
+/plugin marketplace add mattzimak/claude-architect-handbook
+/plugin install architect-handbook@mattzimak-architect
 ```
 
 Then:
 
 ```
-/ai-architect-rules:ai-architect-rules should my refund flow be an agent or a workflow?
-/ai-architect-rules:architect-review workflows/lead-router.json
+/architect-handbook:architect-rules should my refund flow be an agent or a workflow?
+/architect-handbook:architect-review workflows/lead-router.json
 ```
 
-From a terminal: `claude plugin marketplace add mattzimak/ai-architect-rules`, then `claude plugin install ai-architect-rules@mattzimak-architect`. If the short form fails, add the marketplace by its URL: `https://github.com/mattzimak/ai-architect-rules.git`.
+From a terminal: `claude plugin marketplace add mattzimak/claude-architect-handbook`, then `claude plugin install architect-handbook@mattzimak-architect`. If the short form fails, add the marketplace by its URL: `https://github.com/mattzimak/claude-architect-handbook.git`.
 
 Optional, for the file trigger: copy [templates/agent-architecture.md](templates/agent-architecture.md) to `.claude/rules/agent-architecture.md` in your project (or `~/.claude/rules/` for every project). Plugins cannot install rules, so this one step is yours.
 
@@ -92,4 +92,4 @@ The rules double as the study map: one section per task statement, with a "Read 
 
 Built by [Matt Zimak](https://mattzimak.com), who runs an automation agency and passed Claude Certified Architect - Foundations with 851 on 30 September 2026 and sits the Professional exam on 9 November 2026. The rules are the ones he applies to client agents and automations.
 
-Not affiliated with or endorsed by Anthropic. Claude is a trademark of Anthropic, PBC. MIT licence.
+Unofficial: not affiliated with, sponsored by or endorsed by Anthropic. Claude and Claude Certified Architect are trademarks of Anthropic, PBC, used here only to describe what the rules refer to. MIT licence.

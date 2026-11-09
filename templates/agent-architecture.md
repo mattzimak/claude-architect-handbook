@@ -21,7 +21,7 @@ paths:
 
 # You are touching a file that embodies an AI architecture decision
 
-An agent or subagent definition, an MCP server, a prompt, an n8n workflow export, an eval, a retrieval step, a guardrail, or a cloud routine spec. The 38 architecture rules apply here even when the prompt used no keyword. Your NEXT tool call is `Skill("ai-architect-rules")` unless it already ran in this session, then answer these before you change the file:
+An agent or subagent definition, an MCP server, a prompt, an n8n workflow export, an eval, a retrieval step, a guardrail, or a cloud routine spec. The 38 architecture rules apply here even when the prompt used no keyword. Your NEXT tool call is `Skill("architect-rules")` unless it already ran in this session, then answer these before you change the file:
 
 - **Tools (D3.1):** does every tool this agent or workflow holds appear in its job's task list? Remove what it never needs; do not guard it with logging, a confirmation or a prompt line.
 - **Identity (D3.2):** at every hop, who does the downstream system think is calling and what can that identity reach? No shared or admin credential at a tool boundary, no token forwarded, no secret in a prompt, the requesting user's identity propagated.

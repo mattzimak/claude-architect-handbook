@@ -18,6 +18,6 @@ for name in "$@"; do
     sources) file="sources.md" ;;
     *) echo "ref.sh: unknown reference '$name' (use d1..d7, vocab, checklist, sources)" >&2; exit 1 ;;
   esac
-  printf '\n<!-- ai-architect-rules reference: %s -->\n\n' "$file"
+  printf '\n<!-- architect-handbook reference: %s -->\n\n' "$file"
   cat "$dir/$file"
 done

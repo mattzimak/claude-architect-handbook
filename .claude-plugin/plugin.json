@@ -1,14 +1,14 @@
 {
-  "name": "ai-architect-rules",
-  "displayName": "AI Architect Rules",
-  "version": "0.1.0",
-  "description": "The architecture judgement layer for building with Claude: 38 decision rules behind the Claude Certified Architect - Professional blueprint (agents, tools and credentials, MCP, RAG, evals, human review, guardrails, compliance data flows, model tier, caching, SLAs, Claude Code team setup), each with the deciding cue, the right call and the tempting wrong call. A rules skill that answers design questions, a review skill that gates plans and workflows, a prompt hook that makes the rules fire while you build, and an 85-term vocabulary for non-developers.",
+  "name": "architect-handbook",
+  "displayName": "Claude Architect Handbook",
+  "version": "0.1.1",
+  "description": "Unofficial. The architecture judgement behind the Claude Certified Architect blueprint as a Claude Code plugin: 38 decision rules (Professional level now, the Foundations set next) about agents, tools and credentials, MCP, RAG, evals, human review, guardrails, compliance data flows, model tier, caching, SLAs and team setup, each with the deciding cue, the right call and the tempting wrong call. A rules skill that answers design questions, a review skill that gates plans and workflows, a hook that fires the rules while you build, and an 85-term vocabulary for non-developers.",
   "author": {
     "name": "Matt Zimak",
     "url": "https://mattzimak.com"
   },
-  "homepage": "https://github.com/mattzimak/ai-architect-rules",
-  "repository": "https://github.com/mattzimak/ai-architect-rules",
+  "homepage": "https://github.com/mattzimak/claude-architect-handbook",
+  "repository": "https://github.com/mattzimak/claude-architect-handbook",
   "license": "MIT",
   "keywords": [
     "architecture",
@@ -20,7 +20,9 @@
     "n8n",
     "automation",
     "claude-certified-architect",
+    "ccar-f",
     "ccar-p",
+    "handbook",
     "code-review"
   ],
   "hooks": "./hooks/hooks.json"
