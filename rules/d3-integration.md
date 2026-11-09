@@ -12,6 +12,7 @@ The largest domain and the one builders get wrong most often, because every rule
 - Keep it and add a confirmation step. A compensating control; the privilege is still wired in.
 - Tell the model in the system prompt not to use it. An instruction is not an access control.
 - Swap in a bigger model "that follows instructions better". Model capability has nothing to do with authorisation scope.
+- Wiring every tool the platform offers so the agent "can handle anything". Each definition costs context on every request, tool choice gets worse past roughly 30 to 50 tools, and every extra tool is reachable attack surface. Wire the named tasks' tools and put a large catalogue behind tool search.
 **In practice:** an n8n AI Agent node with twelve tools for a job that needs two; a Claude Code agent with every MCP server in the house attached. Delete the node, do not guard it.
 **Read more:** Anthropic, Writing tools for agents (https://www.anthropic.com/engineering/writing-tools-for-agents); study lesson https://claudecertificationguide.com/ccar-p/learn/3-integration/3-1-capability-bloat
 
@@ -25,7 +26,7 @@ The largest domain and the one builders get wrong most often, because every rule
 - Logging every call as the fix for a structural privilege problem. Detective, not preventive.
 - Forwarding the user's token downstream because it is simple. Token passthrough is forbidden by the MCP authorisation spec: it breaks audience validation, destroys attribution, bypasses the token's limits and lets a stolen token travel.
 - Securing one hop while the gap sits at another. An agent-level scope changes nothing if its tool still uses an admin key.
-**In practice:** one instance-wide admin credential used by every workflow is the maximum blast radius and zero attribution. After a leak: rotate first, then move the privileged call behind a backend the client cannot bypass.
+**In practice:** one instance-wide admin credential used by every workflow is the maximum blast radius and zero attribution. After a leak: rotate first, then move the privileged call behind a backend the client cannot bypass. A local stdio MCP server takes its credentials from the environment and sits outside the MCP authorisation flow, so its reach is whatever that key can touch: give it a narrow key. A remote server starts with the smallest scope set and asks for more through step-up authorisation when an operation needs it, instead of taking everything at connect time.
 **Read more:** MCP security best practices (https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices) and authorisation (https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization); study lesson https://claudecertificationguide.com/ccar-p/learn/3-integration/3-2-authentication-authorisation-gaps
 
 ## D3.3 Accuracy versus latency: meet both named requirements, never trade one away
@@ -63,7 +64,8 @@ The largest domain and the one builders get wrong most often, because every rule
 - Retrieve more chunks from a broken index: more stale content, not less.
 - Tune chunk size on complaints without retrieval metrics.
 - Evaluate only end to end, which cannot say which stage failed.
-**In practice:** you replaced the price list PDF but the vector store still serves last year's pages.
+- Forcing heading-based chunking onto documents that have no reliable structure. Plain text and PDFs without clear headings usually do better with fixed-size chunks and an overlap; structure-aware splitting wins only where the structure is real.
+**In practice:** you replaced the price list PDF but the vector store still serves last year's pages. Before embedding, prefix each chunk with a line that places it in its document (which contract, which section); Anthropic measured this cutting failed retrievals by 35%, by 49% with keyword search on the same enriched chunks, and by 67% with re-ranking added.
 **Read more:** Anthropic, Contextual retrieval (https://www.anthropic.com/news/contextual-retrieval); study lesson https://claudecertificationguide.com/ccar-p/learn/3-integration/3-5-rag-pipeline-design
 
 ## D3.6 Retrieval strategy: one strategy per data shape and query pattern
@@ -76,6 +78,7 @@ The largest domain and the one builders get wrong most often, because every rule
 - Reusing the strategy that worked for the first corpus on every data shape.
 - Agentic multi-hop retrieval for a simple, latency-budgeted lookup.
 - A precision-first or speed-first option where the requirement says nothing may be missed.
+- Building a retrieval pipeline for a small, stable corpus. Below about 200,000 tokens (roughly 500 pages) the whole set fits in one cached prompt, with no index to go stale and no retrieval step to miss.
 **In practice:** ask the shop database for today's stock; vector-search the manuals.
 **Read more:** Anthropic, Contextual retrieval (https://www.anthropic.com/news/contextual-retrieval); study lesson https://claudecertificationguide.com/ccar-p/learn/3-integration/3-6-retrieval-strategy-matching
 

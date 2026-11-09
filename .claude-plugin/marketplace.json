@@ -9,8 +9,8 @@
     {
       "name": "architect-handbook",
       "source": "./",
-      "description": "38 architecture decision rules with the deciding cue, the right call and the tempting wrong call; a review gate for plans and workflows; a hook that fires them while you build. Start with /architect-handbook:architect-rules.",
-      "version": "0.1.1",
+      "description": "68 architecture decision rules (38 Professional, 30 Foundations) with the deciding cue, the right call and the tempting wrong call; a review gate for plans and workflows; a hook that fires them while you build. Start with /architect-handbook:architect-rules.",
+      "version": "0.2.0",
       "author": {
         "name": "Matt Zimak"
       }

@@ -24,6 +24,7 @@ Design items punish over-engineering as hard as under-engineering: climb the pat
 - Shipping with no way to capture quality signals.
 - Catching errors and returning empty or default output with no signal (silent failure).
 - Upgrading the model to fix a quality problem nobody can measure.
+- Switching on automatic retries for a step that changes something outside the workflow. A retry runs the side effect again: a second charge, a second email, a duplicate record. Retry only calls that are safe to repeat, or pass an idempotency key the receiving system honours.
 **In practice:** trigger, lookups, the AI node, validation, the send node, and the error or review workflow; a node that errors and continues with an empty item sends the customer a blank email.
 **Read more:** Anthropic, Building effective agents (https://www.anthropic.com/research/building-effective-agents); Structured outputs (https://docs.claude.com/en/docs/build-with-claude/structured-outputs); study lesson https://claudecertificationguide.com/ccar-p/learn/1-solution-design/1-2-end-to-end-architectures
 
@@ -37,6 +38,7 @@ Design items punish over-engineering as hard as under-engineering: climb the pat
 - Chaining when the input has categories (that is routing) or routing when the stages are sequential (that is chaining).
 - Evaluator-optimizer with no criteria to evaluate against.
 - One monolithic prompt for a task that needs staged quality gates.
+- Jumping to a free-running agent when the subtasks are only known once the input is read but a fixed coordinator can still split and merge them. That is orchestrator-workers: the coordinator plans, workers do bounded pieces, and every run stays inspectable.
 **In practice:** a Switch node is routing, a chain of nodes with IF checks is chaining, two merged branches are parallelisation; an AI Agent node left to plan its own tool calls is the agent.
 **Read more:** Anthropic, Building effective agents (https://www.anthropic.com/research/building-effective-agents); study lesson https://claudecertificationguide.com/ccar-p/learn/1-solution-design/1-3-architectural-patterns
 

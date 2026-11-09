@@ -25,6 +25,7 @@ These look like soft skills and are not: every right call is a professional beha
 - Building it your way quietly after losing the argument.
 - Going to the owner's superior before the trade-off was put to the owner.
 - Answering "how accurate" with one point estimate.
+- Letting the sponsor accept a legal, regulatory or safety exposure as if it were a trade-off. Cost, date and quality are the owner's call; an obligation is nobody's to waive, so say so plainly and bring in the function that owns it.
 **In practice:** the one-page note: option A, option B, what we measured, what we recommend, your call.
 **Read more:** official CCAR-P Exam Guide role description (collaborating with cross-functional stakeholders, communicating architectural decisions); study lesson https://claudecertificationguide.com/ccar-p/learn/6-stakeholder-lifecycle/6-2-communicating-decisions-trade-offs
 
@@ -38,7 +39,7 @@ These look like soft skills and are not: every right call is a professional beha
 - Meeting a latency target by dropping a retrieval or verification stage.
 - Streaming or partial results where the consumer is a pipeline.
 - Quietly narrowing the population until the headline number is true.
-**In practice:** "p95 under 8 s measured at the webhook, over a calendar month, for car quotes; fleet quotes have their own target and owner".
+**In practice:** "p95 under 8 s measured at the webhook, over a calendar month, for car quotes; fleet quotes have their own target and owner". Before promising uptime, check the tier underneath: standard is best-effort with no uptime target; Priority Tier targets 99.5% but needs a capacity commitment that is no longer sold, and traffic above the commitment falls back to standard.
 **Read more:** Anthropic, Reduce latency (https://docs.claude.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-latency); study lesson https://claudecertificationguide.com/ccar-p/learn/6-stakeholder-lifecycle/6-3-expectation-alignment-and-slas
 
 ## D6.4 Documentation and implementation guidance: the pack answers how to change safely and how to detect breakage
@@ -64,5 +65,6 @@ These look like soft skills and are not: every right call is a professional beha
 - Handing the deprecation to the commercial owner.
 - Prompt edits in response to last week's complaints, called iteration.
 - Building on against evidence that has already contradicted the plan.
-**In practice:** the model retirement email is a re-test job, not a procurement job.
+- Handing over code and documents with no proof the receiving team can run the system. Ownership has moved when they can re-run the evals and get a comparable number, read a trace to the failing stage, roll a change back, and know whom to call.
+**In practice:** the model retirement email is a re-test job, not a procurement job. Before a retirement date, export usage by API key and model from the Console to find every caller of the old model (the forgotten scheduled job is the usual one), and re-benchmark cost and latency on the replacement, not only quality.
 **Read more:** Anthropic, Model deprecations (https://docs.claude.com/en/docs/about-claude/model-deprecations); study lesson https://claudecertificationguide.com/ccar-p/learn/6-stakeholder-lifecycle/6-5-lifecycle-phases

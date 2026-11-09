@@ -12,6 +12,7 @@ The smallest domain and the most predictable: guidance is not enforcement, measu
 - An onboarding page or training session as the answer to divergent setups.
 - Restricting the tool to senior engineers, or a human retyping every change: both discard the tool and keep its risks.
 - Assuming a permission granted at a lower scope widens what a higher scope forbids.
+- One long instruction file holding every rule. It loads in every session, adherence drops as it grows (the docs aim for under 200 lines) and contradictory lines get resolved arbitrarily; scope narrow rules to file paths so they load only with matching files, and move procedures into skills.
 **In practice:** the hook that denies a bad write versus the CLAUDE.md sentence that asks nicely; the same idea as D3 "an instruction is not an access control" and D5's control hierarchy, in the developer's own environment.
 **Read more:** Claude Code settings and permissions (https://code.claude.com/docs/en/settings), hooks (https://code.claude.com/docs/en/hooks), memory and rules (https://code.claude.com/docs/en/memory); study lesson https://claudecertificationguide.com/ccar-p/learn/7-developer-productivity/7-1-team-tooling-configuration
 
@@ -25,7 +26,8 @@ The smallest domain and the most predictable: guidance is not enforcement, measu
 - The producer of a change recording it as reviewed.
 - Automation aimed first at work nothing can check cheaply.
 - A measured improvement whose procedure lives in one person's memory.
-**In practice:** a second session reviews the pull request; a person presses merge; the procedure becomes a skill in the repo.
+- A turn or spend cap as the safety control for an unattended run. Caps (`--max-turns`, `--max-budget-usd`) limit how much runs; permission rules, `--tools` and `--disallowedTools` limit what can run, and `--allowedTools` only skips the prompt for the tools it names.
+**In practice:** a second session reviews the pull request; a person presses merge; the procedure becomes a skill in the repo. Make the check the agent's stop condition rather than a request: a Stop hook that sends Claude back until the tests pass is enforced by the client; a sentence asking it to run the tests is not. Scope a reviewing agent to correctness and the stated requirements and tell it to skip style.
 **Read more:** Claude Code best practices (https://code.claude.com/docs/en/best-practices); Agent Skills (https://code.claude.com/docs/en/skills); study lesson https://claudecertificationguide.com/ccar-p/learn/7-developer-productivity/7-2-ai-assisted-developer-workflows
 
 ## D7.3 Debugging and operational resolution: evidence before change, containment by blast radius
@@ -38,5 +40,6 @@ The smallest domain and the most predictable: guidance is not enforcement, measu
 - Reverting several changes at once with no ongoing harm to stop.
 - Accepting the agent's self-report as root cause, or clearing a hypothesis on one re-run.
 - Closing with a fix and nothing else, or a plan that assumes access nobody granted.
+- Counting on session rewind to undo what an agent did. Checkpoints track the agent's own file edits; files changed only by shell commands, most subagent edits and outside changes are not restored, so version control stays the real undo.
 **In practice:** read the execution log before you touch the prompt; roll back only the node that is doing damage; add the failing input to the regression folder.
 **Read more:** Claude Code hooks (https://code.claude.com/docs/en/hooks) and monitoring (https://code.claude.com/docs/en/monitoring-usage); study lesson https://claudecertificationguide.com/ccar-p/learn/7-developer-productivity/7-3-debugging-and-operational-resolution

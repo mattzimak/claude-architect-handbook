@@ -11,6 +11,7 @@ Evaluation is discipline: metrics before the build, one change at a time, eviden
 - Mean latency as the target. Means hide the tail, and the tail is who churns.
 - Metrics after launch, calibrated to whatever the system does.
 - Safety as harmful-output rate alone: a system that refuses everything scores perfectly.
+- Optimising a stand-in number (reply length, judge score, thumbs-up rate) without checking that it still moves with the outcome it stands for. Pushed hard enough, a proxy drifts away from the goal; audit it against the real outcome and drop it when the two part.
 **In practice:** "first reply under 2 hours for 95% of B2B enquiries, measured at the webhook", not "faster replies".
 **Read more:** Anthropic, Define success criteria (https://docs.claude.com/en/docs/test-and-evaluate/define-success); study lesson https://claudecertificationguide.com/ccar-p/learn/4-evaluation-testing/4-1-defining-evaluation-metrics
 
@@ -24,6 +25,7 @@ Evaluation is discipline: metrics before the build, one change at a time, eviden
 - All-human grading as "the rigorous option": less coverage at more cost.
 - Eval cases that also sit in the prompt as few-shot examples: passing proves recall, not capability.
 - More happy-path cases to fix incidents that live in the edge cases.
+- Letting the model that wrote the output also grade it. Anthropic's eval guidance generally uses a different model as the judge.
 **In practice:** fifty real tickets with approved answers, kept apart from the two examples in the prompt; an IF node checks the JSON, a second model scores tone against a rubric, a person checks one in twenty.
 **Read more:** Anthropic, Develop test cases (https://docs.claude.com/en/docs/test-and-evaluate/develop-tests); study lesson https://claudecertificationguide.com/ccar-p/learn/4-evaluation-testing/4-2-evaluation-datasets-test-frameworks
 
@@ -45,6 +47,7 @@ Evaluation is discipline: metrics before the build, one change at a time, eviden
 **Decide:** whether a wrong output is a retrieval problem, a prompt problem or a model problem.
 **Cues:** "started after the corpus refresh", "the model ignores the format", "inconsistent answers", "temperature zero", "just upgrade the model".
 **The call:** evidence before conclusions. Find the correlation the symptom gives you (a refresh, a prompt edit, a traffic shift) and name the stage. Grounding failures (the model was handed bad or missing context) are pipeline fixes; generation failures (the context was right and the model still invented) are prompt-contract fixes: answer only from the text, allow "not in the source", allow null fields. A model upgrade is only right after a stronger-tier test confirms a capability gap. "First place to investigate" is a different question from "best eventual fix".
+**Exam key vs now:** Exam: temperature appears as a setting worth adjusting (the guide's published Domain 4 sample lists it among the wrong answers). Now: `temperature`, `top_p` and `top_k` return a 400 at any non-default value on Claude 4.7 and later models, and API version 2026-10-21 removes them for every model; steer behaviour with the prompt (model deprecations docs, checked 9 Nov 2026).
 **Tempting wrong calls:**
 - Upgrade the model first: it fabricates just as fluently from a broken index and obeys ambiguous instructions more expensively.
 - Rewrite the prompt to suppress hallucinations that began with a corpus refresh: patching downstream of the fault.
@@ -62,7 +65,8 @@ Evaluation is discipline: metrics before the build, one change at a time, eviden
 - Batch for a user-facing, latency-sensitive flow: the cue for batch is the absence of someone waiting.
 - The smallest model as a cost fix with no eval re-run: the saving is measured, the quality loss is not.
 - Caching for window overflow, wrong answers or one-off documents: caching reuses a repeated prefix; it does not shrink context, add capacity or change what the model says.
-**In practice:** cache the 20-page policy, send the customer's question last; run the nightly enrichment as a batch, never the chat reply.
+- Changing model when effort is the cheaper dial. On current models effort shapes every output token (text, tool calls and thinking), and Anthropic makes it the main cost and latency control; sweep it against the evals before swapping or adding a model.
+**In practice:** cache the 20-page policy, send the customer's question last; run the nightly enrichment as a batch, never the chat reply. Batch and prompt caching discounts stack, so a nightly batch with a long shared prefix should use both; a batch expires if it has not finished within 24 hours and its results stay downloadable for 29 days, so the step that collects them must run inside that window.
 **Read more:** Anthropic, Prompt caching (https://docs.claude.com/en/docs/build-with-claude/prompt-caching) and Message Batches (https://docs.claude.com/en/docs/build-with-claude/batch-processing); study lesson https://claudecertificationguide.com/ccar-p/learn/4-evaluation-testing/4-5-token-latency-cost-optimisation
 
 ## D4.6 Monitoring in production: uptime does not measure wrongness
@@ -74,5 +78,6 @@ Evaluation is discipline: metrics before the build, one change at a time, eviden
 - Green uptime and mean latency presented as evidence of health.
 - Skipping continuous evaluation because the team evals before releases.
 - Closing incidents with a fix and no regression case.
-**In practice:** the classifier that was fine in March and quietly wrong by June because the catalogue changed; nobody re-ran the baseline.
+- Alerting on every metric. A team paged for everything learns to ignore pages; alert on guard metrics at tail percentiles, with thresholds taken from the measured baseline, and decide on purpose what stays silent.
+**In practice:** the classifier that was fine in March and quietly wrong by June because the catalogue changed; nobody re-ran the baseline. Four cheap signals move before quality scores do, and each points at a stage: tokens per request (inputs grew or a prompt edit landed), refusal rate (traffic shifted or a policy line clashes with new inputs), tool-failure rate (an upstream API changed), and input length (a new client or integration arrived).
 **Read more:** Anthropic, Effective context engineering (https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents); study lesson https://claudecertificationguide.com/ccar-p/learn/4-evaluation-testing/4-6-monitoring-observability

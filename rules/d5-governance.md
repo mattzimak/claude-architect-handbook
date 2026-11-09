@@ -12,6 +12,8 @@ Governance items prefer the control that removes or gates a risk over the one th
 - A more capable model to stop policy violations or resist prompt injection. Model size is unrelated to authorisation scope.
 - Logging or a periodic review against a requirement written as "never".
 - A confirmation, approval or alert in front of a tool the role does not need.
+- Putting third-party text (inbound emails, web pages, uploaded files, search results) into the system prompt or a plain user message. Anthropic's injection guidance passes it only inside tool results, JSON-encoded where possible, under a system-prompt line saying tool content is data to report, not instructions to follow.
+- Appending your own instructions to a tool result. Claude treats tool-result text as untrusted, so the instruction may be ignored or flagged as an injection; send it as a user turn after the tool result.
 **In practice:** a validation node after the AI node, not a bold line in the prompt; a deleted tool, not an approval button in front of it.
 **Read more:** Anthropic, Mitigate jailbreaks and prompt injection (https://docs.claude.com/en/docs/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks); study lesson https://claudecertificationguide.com/ccar-p/learn/5-governance-safety/5-1-guardrails-and-safety-controls
 
@@ -25,6 +27,7 @@ Governance items prefer the control that removes or gates a risk over the one th
 - Ordering the register by how often each failure fires.
 - A disclaimer or notice on an action that has already left the organisation.
 - A review gate with no measured override rate: an assumption on the register, not a control.
+- Quoting a per-step accuracy for an agent that chains many steps. Errors compound across steps; the levers are scope, number of steps, reversibility and checkpoints, not a better per-item figure.
 **In practice:** the list of "what this automation could break, who notices, who owns it", with the payment and deletion rows at the top.
 **Read more:** Anthropic, Building effective agents (https://www.anthropic.com/research/building-effective-agents); study lesson https://claudecertificationguide.com/ccar-p/learn/5-governance-safety/5-2-risks-limitations-failure-modes
 
@@ -38,7 +41,8 @@ Governance items prefer the control that removes or gates a risk over the one th
 - A periodic retrospective review for harm that has already left the organisation.
 - A second or more senior reviewer who sees the same draft: two rubber stamps.
 - Escalation on a confidence score nobody validated.
-**In practice:** refunds wait for approval; status tags run and get spot-checked; availability updates run with an undo.
+- Training reviewers harder to stop rubber-stamping. Automation bias is fixed in the design: what the reviewer sees beyond the model's own inputs, how many items each person gets, and where the gate sits.
+**In practice:** refunds wait for approval; status tags run and get spot-checked; availability updates run with an undo. Anthropic's Usage Policy attaches the review and disclosure duties to the recommendation delivered about a specific person. Internal drafting or analysis that is not the final recommendation, applying a fixed rule with no judgement about the individual, and business operations that decide nothing about a person are excluded; a wholly favourable decision such as paying a claim may go ahead without review where the law allows, and a partial approval is not wholly favourable.
 **Read more:** Anthropic Usage Policy, high-risk use cases (https://www.anthropic.com/legal/aup); Building effective agents (https://www.anthropic.com/research/building-effective-agents); study lesson https://claudecertificationguide.com/ccar-p/learn/5-governance-safety/5-3-human-in-the-loop-validation
 
 ## D5.4 Regulatory compliance as a design constraint: reduce what crosses the boundary, before it crosses
@@ -51,7 +55,8 @@ Governance items prefer the control that removes or gates a risk over the one th
 - Drawing the assessment around the user-facing app while logs and indexes sit outside it.
 - Signing the processor agreement at the vendor's next renewal.
 - Treating a supplier's FedRAMP status as the agency's authorisation to operate.
-**In practice:** replace the customer name with a token before the API call and map it back afterwards; sign the vendor contract before the pilot, not after.
+- Assuming a zero-data-retention arrangement covers every endpoint. Batch, the Files API and code execution are stateful and outside ZDR; the API does not block them, so using one quietly steps outside the arrangement for that data; content flagged by trust and safety systems can be kept for up to two years under any arrangement.
+**In practice:** replace the customer name with a token before the API call and map it back afterwards; sign the vendor contract before the pilot, not after. On the Claude API, where inference runs is a per-request setting with two values, `global` (default) and `us`, and `us` costs 1.1 times standard prices on Claude 4.6 and later; there is no EU-only value, so a client who requires EU-only processing hears that in discovery. Health data needs a HIPAA-ready organisation rather than ZDR; that organisation blocks non-eligible features with a 400 and does not cover Claude Code, so other work runs in a separate organisation.
 **Read more:** Anthropic, Privacy and data handling in the Claude Developer Platform (https://docs.claude.com/en/docs/about-claude/data-usage); study lesson https://claudecertificationguide.com/ccar-p/learn/5-governance-safety/5-4-regulatory-compliance
 
 ## D5.5 Ethical AI: measure outcomes by cohort, disclose at the moment of use, explain the person's own outcome
@@ -64,5 +69,5 @@ Governance items prefer the control that removes or gates a risk over the one th
 - Recording the foundation model's training data as the root cause and documenting it as a limitation.
 - A model card, policy page or terms paragraph offered as disclosure.
 - Explaining a decision by describing the model or the architecture.
-**In practice:** approval rates by district, not a note that says "we do not use gender"; the line on the letter that says the draft was AI-assisted and who to call to challenge it.
+**In practice:** approval rates by district, not a note that says "we do not use gender"; the line on the letter that says the draft was AI-assisted and who to call to challenge it. Traceability is the third transparency duty beside disclosure and explanation: keep which model version, prompt version and retrieved context produced each decision, long enough to answer a challenge months later. Separate from the high-risk rules, every consumer-facing chatbot or agent that talks to outside users must say it is AI, at least at the start of each session or in the interface; it need not name Anthropic or Claude.
 **Read more:** Anthropic Usage Policy (https://www.anthropic.com/legal/aup); study lesson https://claudecertificationguide.com/ccar-p/learn/5-governance-safety/5-5-ethical-ai-bias-fairness-transparency
